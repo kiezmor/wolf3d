@@ -6,7 +6,7 @@
 /*   By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 00:10:07 by vpluchar          #+#    #+#             */
-/*   Updated: 2017/04/25 07:26:48 by vpluchar         ###   ########.fr       */
+/*   Updated: 2017/10/29 18:14:33 by vpluchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putstr(char const *s);
 void				ft_putwchar(wchar_t wc);
 void				ft_putwcs(wchar_t *wcs);
-int					get_next_line(const int fd, char **line);
+int					gnl(const int fd, char **line);
 
 /*
 **	Int

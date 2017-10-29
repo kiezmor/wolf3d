@@ -6,7 +6,7 @@
 /*   By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 08:26:57 by vpluchar          #+#    #+#             */
-/*   Updated: 2016/11/28 21:08:38 by vpluchar         ###   ########.fr       */
+/*   Updated: 2017/10/29 18:41:55 by vpluchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ int		ft_countwords(char const *str, char c)
 		while (str[i] == c)
 			i++;
 		if (str[i] != c && str[i] != '\0')
+		{
+			while (str[i] != c && str[i] != '\0')
+				i++;
 			count++;
-		while (str[i] != c && str[i] != '\0')
-			i++;
+		}
 	}
 	return (count);
 }
