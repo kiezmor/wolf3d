@@ -6,13 +6,14 @@
 #    By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/29 17:07:16 by vpluchar          #+#    #+#              #
-#    Updated: 2017/10/29 17:12:16 by vpluchar         ###   ########.fr        #
+#    Updated: 2017/10/29 17:36:45 by vpluchar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compilation
 
 NAME	=	wolf3d
+
 CC		=	gcc
 FLAGS	=	-Wall -Werror -Wextra
 FRAME	=	-I./mlx -L./mlx -lmlx -framework OpenGL -framework AppKit
@@ -21,7 +22,7 @@ FRAME	=	-I./mlx -L./mlx -lmlx -framework OpenGL -framework AppKit
 
 SDIR	=	src
 DOBJ	=	obj
-INC		=	-I inc/
+INC		=	-I./inc/ -I./libft/includes/
 
 # Colors
 
@@ -34,10 +35,10 @@ NC		=	\x1b[0m
 
 LIB		=	libft/libft.a
 
-OBJ 	=	$(patsubst %.c, $(DOBJ)/%.o, $(SRC))
-ODIR	=	$(addprefix $(DOBJ)/, $(SDIR))
+SRC		=	src/wolf.c
 
-SRC		=	
+OBJ		=	$(patsubst %.c, $(DOBJ)/%.o, $(SRC))
+ODIR	=	$(addprefix $(DOBJ)/, $(SDIR))
 
 # Rules
 
@@ -46,12 +47,11 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "${Y}create ${G}$(NAME)${NC}"
 	@make -C libft/
-
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIB)
 	@echo "${G}$(NAME) created${NC}"
 
 $(DOBJ)/%.o:%.c
-	@mkdir -p $(ODIR)
-	@echo "${G}[OK]${NC}	${Y}Compiling:${NC}" $<
+	@mkdir -p $(ODIR) 
 	@$(CC) $(FLAGS) $(INC) -c $< -o $@
 
 clean:
