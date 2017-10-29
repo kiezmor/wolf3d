@@ -6,7 +6,7 @@
 /*   By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:11:37 by vpluchar          #+#    #+#             */
-/*   Updated: 2017/10/29 18:59:20 by vpluchar         ###   ########.fr       */
+/*   Updated: 2017/10/29 21:09:59 by vpluchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		open_map(char *map, t_wolf *e)
 	if (!(ft_createmap(fd, e)))
 		return (5);
 	close(fd);
-	init(e);
+	init(e); //-> need to make
 }
 
 int				ft_createmap(int fd, t_wolf *e)
