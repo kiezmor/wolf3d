@@ -19,6 +19,13 @@
 
 # define WDT 1280
 # define HGT 720
+# define MS 0.05
+# define TS 0.05
+# define UP 13
+# define DOWN 1
+# define RIGHT 2
+# define LEFT 0
+# define ESC 53
 
 typedef struct	s_wolf
 {
