@@ -6,11 +6,19 @@
 /*   By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 17:19:22 by vpluchar          #+#    #+#             */
-/*   Updated: 2017/10/29 20:48:09 by vpluchar         ###   ########.fr       */
+/*   Updated: 2017/10/31 23:32:20 by chle-van         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
+
+int			ft_exit(t_wolf *e)
+{
+	mlx_destroy_image(e->mlx, e->img);
+	free(e);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
 
 void	ft_initmlx(t_wolf *e)
 {
@@ -22,28 +30,22 @@ void	ft_initmlx(t_wolf *e)
 	e->py = 0.66;
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, WID, HEI, "Wolf3d");
-	e->img = mlx_new_image(e->mlx, WID, HEI);
-	e->data = mlx_get_data_addr(e->img, &e->bpp, &e->sline, &e->endian);
-	menu(e);
-	mlx_key_hook(e->win, &ft_move, e);
+	mlx_hook(e->win, 17, 1L << 17, &ft_exit, e);
+	mlx_hook(e->win, 2, 1L << 0, &ft_move, e);
 	mlx_loop_hook(e->mlx, &ft_raycast, e);
 	mlx_loop(e->mlx);
 }
 
 int    ft_move(int key, t_wolf *e)
 {
-	if(key == ESC)
-	{
-		mlx_destroy_image(e->mlx, e->img);
-		free(e);
-		exit(EXIT_SUCCESS);
-	}
-	if (key == UP || DOWN)
+	if (key == ESC)
+		ft_exit(e);
+	if (key == UP || key == DOWN)
 	{
 		e->ms = (key == UP) ? (MS) : (-MS);
-			if (e->map[(int)(e->x + e->dx * e->ms)][(int)e->y] == 0)
+			if (!(e->map[(int)(e->x + e->dx * e->ms)][(int)e->y]))
 				e->x += e->dx * e->ms;
-		if (e->map[(int)e->x][(int)(e->y + e->dy * e->ms)] == 0)
+		if (!(e->map[(int)e->x][(int)(e->y + e->dy * e->ms)]))
 			e->y += e->dy * e->ms;
 	}
 	if (key == LEFT || key == RIGHT)

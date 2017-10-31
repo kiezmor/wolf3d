@@ -37,8 +37,7 @@ LIB		=	libft/libft.a mlx/libmlx.a
 
 SRC		=	src/wolf.c\
 			src/ray.c\
-			src/map.c\
-			src/menu.c
+			src/map.c
 
 OBJ		=	$(patsubst %.c, $(DOBJ)/%.o, $(SRC))
 ODIR	=	$(addprefix $(DOBJ)/, $(SDIR))

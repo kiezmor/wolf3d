@@ -6,7 +6,7 @@
 /*   By: vpluchar <vpluchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 17:14:46 by vpluchar          #+#    #+#             */
-/*   Updated: 2017/10/29 18:47:21 by vpluchar         ###   ########.fr       */
+/*   Updated: 2017/10/31 23:45:21 by vpluchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 # include "libft.h"
 # include <math.h>
 
-# define WID 540
-# define HEI 400
+# define WID 1280
+# define HEI 800
 # define ESC 53
 # define UP 13
 # define DOWN 1
 # define LEFT 0
 # define RIGHT 2
-# define TS 0.05
-# define MS 0.05
+# define TS 0.1
+# define MS 0.1
 
 # define COLORA 0Xcc43fe
 # define COLORB 0X42e5fe
@@ -65,17 +65,15 @@ typedef struct	s_wolf
 	double		ry;
 	double		rdx;
 	double		rdy;
-	double		rdtx;
-	double		rdty;
-	double		rcam;
 	double		sx;
 	double		sy;
+	double		rcam;
 
 }				t_wolf;
 
+int				ft_exit(t_wolf *e);
 int				ft_move(int key, t_wolf *e);
 int				open_map(char *map, t_wolf *e);
 int				ft_raycast(t_wolf *e);
-void			menu(t_wolf *e);
 #endif
 

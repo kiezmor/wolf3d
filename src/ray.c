@@ -1,27 +1,20 @@
 #include "wolf.h"
 
-static void ft_putpx(t_wolf *e, int x, int y, unsigned int c)
-{
-	int i;
-	int *tmp;
-	tmp = (int *)e->data;
-	i = x + (y * WID);
-	tmp[i] = c;
-}
-
 static void ft_drawline(t_wolf *e, int sl ,int el, int x)
 {
 	int i;
+	int *tmp;
 
+	tmp = (int *)e->data;
 	i = -1;
 	while (++i < sl)
-		ft_putpx(e, x, i, COLORS);
+		tmp[x + i * WID] = COLORS;
 	i--;
 	while (++i >= sl && i < el)
-		ft_putpx(e, x, i, e->color);
+		tmp[x + i * WID] = e->color;
 	i--;
 	while (++i < sl)
-		ft_putpx(e, x, i, COLORG);
+		tmp[x + i * WID] = COLORG;
 }
 
 static void ft_rdraw(t_wolf *e, int i)
@@ -41,7 +34,7 @@ static void ft_rdraw(t_wolf *e, int i)
 		e->color = COLORA;
 	else if (((e->rx < 0 && e->ry >= 0) || (e->rx >= 0 && e->ry >= 0)) && e->side)
 		e->color = COLORB;
-	else if (((e->rx < 0 && e->ry < 0) || (e->rx >= 0 && e->ry >= 0)) && !e->side)
+	else if (((e->rx < 0 && e->ry < 0) || (e->rx < 0 && e->ry >= 0)) && !e->side)
 		e->color = COLORC;
 	else
 		e->color = COLORD;
@@ -67,9 +60,9 @@ static void ft_dist(t_wolf *e)
 		if (e->map[e->mx][e->my])
 		{
 			if (e->side)
-				e->dist = (e->my - e->y + (1 - ((e->ry < 0) ? -1 : 1)) / 2) / e->ry;
+				e->dist = (e->my - e->y + ((e->ry < 0) ? 1 : 0)) / e->ry;
 			else
-				e->dist = (e->mx - e->x + (1 - ((e->rx < 0) ? -1 : 1)) / 2) / e->rx;
+				e->dist = (e->mx - e->x + ((e->rx < 0) ? 1 : 0)) / e->rx;
 		}
 	}
 }
@@ -78,6 +71,8 @@ int			 ft_raycast(t_wolf *e)
 {
 	int x;
 
+	e->img = mlx_new_image(e->mlx, WID, HEI);
+	e->data = mlx_get_data_addr(e->img, &e->bpp, &e->sline, &e->endian);
 	x = -1;
 	while (++x < WID)
 	{
@@ -90,12 +85,11 @@ int			 ft_raycast(t_wolf *e)
 		e->rdy = sqrt(1 + (e->rx * e->rx) / (e->ry * e->ry));
 		e->sx = ((e->rx < 0) ? (e->x - e->mx) : (1 + e->mx - e->x)) * e->rdx;
 		e->sy = ((e->ry < 0) ? (e->y - e->my) : (1 + e->my - e->y)) * e->rdy;
-		e->side = -1;
 		e->dist = 0;
 		ft_dist(e);
 		ft_rdraw(e, x);
 	}
 	mlx_put_image_to_window(e->mlx, e->win, e->img, 0, 0);
-	ft_bzero(e->data, WID * HEI * e->bpp);
+//	ft_bzero(e->data, WID * HEI * e->bpp);
 	return (0);
 }
