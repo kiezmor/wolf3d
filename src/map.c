@@ -12,23 +12,6 @@
 
 #include "wolf.h"
 
-int		open_map(char *map, t_wolf *e)
-{
-	int	fd;
-
-	if (!(fd = open(map, O_RDONLY)))
-		return (2);
-	if (ft_check(fd, e) < 0)
-		return (4);
-	close(fd);
-	if (!(fd = open(map, O_RDONLY)))
-		return (2);
-	if (!(ft_createmap(fd, e)))
-		return (5);
-	close(fd);
-	init(e); //-> need to make
-}
-
 int				ft_createmap(int fd, t_wolf *e)
 {
 	char	**tmp;
@@ -75,7 +58,7 @@ int				ft_check(int fd, t_wolf *e)
 			while (line[++i])
 				if (!ft_strchr(" 0123456789", line[i]))
 					return (-1);
-			fdf->ymax++;
+			e->ymax++;
 		}
 		else
 			return (-1);
@@ -84,4 +67,21 @@ int				ft_check(int fd, t_wolf *e)
 	if (c == 0 && e->xmax && e->ymax)
 		return (1);
 	return (-1);
+}
+
+int		open_map(char *map, t_wolf *e)
+{
+	int	fd;
+
+	if (!(fd = open(map, O_RDONLY)))
+		return (2);
+	if (ft_check(fd, e) < 0)
+		return (4);
+	close(fd);
+	if (!(fd = open(map, O_RDONLY)))
+		return (2);
+	if (!(ft_createmap(fd, e)))
+		return (5);
+	close(fd);
+	return(0);
 }

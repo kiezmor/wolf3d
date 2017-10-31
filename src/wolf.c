@@ -12,6 +12,52 @@
 
 #include "wolf.h"
 
+void	ft_initmlx(t_wolf *e)
+{
+	e->x = 5;
+	e->y = 5;
+	e->dx = -1;
+	e->dy = 0;
+	e->px = 0;
+	e->py = 0.66;
+	e->mlx = mlx_init();
+	e->win = mlx_new_window(e->mlx, WID, HEI, "Wolf3d");
+	e->img = mlx_new_image(e->mlx, WID, HEI);
+	e->data = mlx_get_data_addr(e->img, &e->bpp, &e->sline, &e->endian);
+	mlx_key_hook(e->win, &ft_move, e);
+	mlx_loop_hook(e->mlx, &ft_raycast, e);
+	mlx_loop(e->mlx);
+}
+
+int    ft_move(int key, t_wolf *e)
+{
+	if(key == ESC)
+	{
+		mlx_destroy_image(e->mlx, e->img);
+		free(e);
+		exit(EXIT_SUCCESS);
+	}
+	if (key == UP || DOWN)
+	{
+		e->ms = (key == UP) ? (MS) : (-MS);
+			if (e->map[(int)(e->x + e->dx * e->ms)][(int)e->y] == 0)
+				e->x += e->dx * e->ms;
+		if (e->map[(int)e->x][(int)(e->y + e->dy * e->ms)] == 0)
+			e->y += e->dy * e->ms;
+	}
+	if (key == LEFT || key == RIGHT)
+	{
+		e->ts = (key == LEFT) ? (TS) : (-TS);
+		e->tmp = e->dx;
+		e->dx = e->dx * cos(e->ts) - e->dy * sin(e->ts);
+		e->dy = e->tmp * sin(e->ts) + e->dy * cos(e->ts);
+		e->tmp = e->px;
+		e->px = e->px * cos(e->ts) - e->py * sin(e->ts);
+		e->py = e->tmp * sin(e->ts) + e->py * cos(e->ts);
+	}
+	return (0);
+}
+
 static void	error(int i)
 {
 	if (i == 1)
@@ -32,13 +78,13 @@ int			main(int ac, char **av)
 {
 	t_wolf	*e;
 	int		i;
-	
+
 	if (ac != 2)
 		error(1);
 	if (!(e = (t_wolf *)malloc(sizeof(t_wolf))))
 		error(3);
 	if ((i = open_map(av[1], e)) != 0)
 		error(i);
-	free(e);
+	ft_initmlx(e);
 	return (0);
 }
