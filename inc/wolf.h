@@ -76,5 +76,6 @@ typedef struct	s_wolf
 int				ft_move(int key, t_wolf *e);
 int				open_map(char *map, t_wolf *e);
 int				ft_raycast(t_wolf *e);
+void			menu(t_wolf *e);
 #endif
 

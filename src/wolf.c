@@ -24,6 +24,7 @@ void	ft_initmlx(t_wolf *e)
 	e->win = mlx_new_window(e->mlx, WID, HEI, "Wolf3d");
 	e->img = mlx_new_image(e->mlx, WID, HEI);
 	e->data = mlx_get_data_addr(e->img, &e->bpp, &e->sline, &e->endian);
+	menu(e);
 	mlx_key_hook(e->win, &ft_move, e);
 	mlx_loop_hook(e->mlx, &ft_raycast, e);
 	mlx_loop(e->mlx);
