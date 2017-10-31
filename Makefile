@@ -15,14 +15,14 @@
 NAME	=	wolf3d
 
 CC		=	gcc
-FLAGS	=	-Wall -Werror -Wextra
-FRAME	=	-I./mlx -L./mlx -lmlx -framework OpenGL -framework AppKit
+FLAGS	=	-Wall -Werror -Wextra -g
+FRAME	=	-framework OpenGL -framework AppKit
 
 # Directories
 
 SDIR	=	src
 DOBJ	=	obj
-INC		=	-I./inc/ -I./libft/includes/
+INC		=	-I./inc/ -I./libft/includes/ -I./mlx/
 
 # Colors
 
@@ -33,9 +33,11 @@ NC		=	\x1b[0m
 
 # Files
 
-LIB		=	libft/libft.a
+LIB		=	libft/libft.a mlx/libmlx.a
 
-SRC		=	src/wolf.c
+SRC		=	src/wolf.c\
+			src/ray.c\
+			src/map.c
 
 OBJ		=	$(patsubst %.c, $(DOBJ)/%.o, $(SRC))
 ODIR	=	$(addprefix $(DOBJ)/, $(SDIR))
@@ -47,7 +49,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "${Y}create ${G}$(NAME)${NC}"
 	@make -C libft/
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIB)
+	@$(CC) $(FLAGS) -o $(NAME) $(FRAME) $(OBJ) $(LIB)
 	@echo "${G}$(NAME) created${NC}"
 
 $(DOBJ)/%.o:%.c
