@@ -14,5 +14,5 @@
 
 void	menu(t_wolf *e)
 {
-	mlx_string_put(e->mlx, e->win, (WDT - 190), 80, 0xFFFFFF, ft_itoa(e->sx);
+	mlx_string_put(e->mlx, e->win, (WID - 190), 80, 0xFFFFFF, ft_itoa(e->sx);
 }
